@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+dataset/
+encodings/
+attendance_records/
+config.json
+*.zip
+*.bak
+.venv/
+venv/
+env/
+.env

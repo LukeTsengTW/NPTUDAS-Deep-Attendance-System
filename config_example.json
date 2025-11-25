@@ -1,0 +1,34 @@
+{
+  "system": {
+    "system_name": "NPTU 國立屏東大學 AI 人臉辨識點名系統",
+    "version": "3.4.0",
+    "language": "zh-TW"
+  },
+  "recognition": {
+    "tolerance": 0.45,
+    "display_confidence_threshold": 60,
+    "attendance_confidence_threshold": 65,
+    "process_every_n_frames": 60
+  },
+  "video": {
+    "jpeg_quality": 85,
+    "camera_index": 0
+  },
+  "admin": {
+    "username": "admin",
+    "password": "CHANGE_THIS_PASSWORD", 
+    "session_timeout": 3600
+  },
+  "attendance": {
+    "auto_record": true,
+    "record_format": "csv",
+    "backup_enabled": false
+  },
+  "course": {
+    "course_name": "範例課程",
+    "current_session": 1,
+    "total_sessions": 3,
+    "instructor": "範例老師",
+    "single_attendance": false
+  }
+}

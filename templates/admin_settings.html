@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>系統設定 - AI點名系統</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Microsoft JhengHei', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            border-radius: 15px;
+            padding: 20px 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            color: #667eea;
+            font-size: 2em;
+        }
+
+        .header .actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            color: white;
+        }
+
+        .btn-primary {
+            background: #667eea;
+        }
+
+        .btn-primary:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+        }
+
+        .btn-success {
+            background: #28a745;
+        }
+
+        .btn-success:hover {
+            background: #218838;
+        }
+
+        .btn-danger {
+            background: #dc3545;
+        }
+
+        .btn-danger:hover {
+            background: #c82333;
+        }
+
+        .btn-warning {
+            background: #ffc107;
+            color: #333;
+        }
+
+        .btn-warning:hover {
+            background: #e0a800;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            margin-bottom: 20px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card h2 {
+            color: #667eea;
+            margin-bottom: 20px;
+            font-size: 1.5em;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eee;
+        }
+
+        .form-section {
+            margin-bottom: 30px;
+        }
+
+        .form-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .form-section h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .form-group .help-text {
+            font-size: 0.9em;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-group input[type="range"] {
+            padding: 0;
+        }
+
+        .range-value {
+            display: inline-block;
+            margin-left: 10px;
+            font-weight: bold;
+            color: #667eea;
+            min-width: 50px;
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .checkbox-group input[type="checkbox"] {
+            width: auto;
+            cursor: pointer;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid #eee;
+        }
+
+        .message {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: none;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .message.warning {
+            background: #fff3cd;
+            color: #856404;
+            border: 1px solid #ffeaa7;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .warning-box h4 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+
+        .warning-box ul {
+            margin-left: 20px;
+            color: #856404;
+        }
+
+        .info-box {
+            background: #d1ecf1;
+            border: 2px solid #17a2b8;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+        }
+
+        .info-box h4 {
+            color: #0c5460;
+            margin-bottom: 10px;
+        }
+
+        .info-box p {
+            color: #0c5460;
+            margin: 5px 0;
+        }
+
+        /* Toast 通知樣式 */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .toast {
+            min-width: 300px;
+            padding: 16px 20px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: slideIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .toast.success {
+            border-left: 4px solid #28a745;
+        }
+
+        .toast.error {
+            border-left: 4px solid #dc3545;
+        }
+
+        .toast.info {
+            border-left: 4px solid #17a2b8;
+        }
+
+        .toast.warning {
+            border-left: 4px solid #ffc107;
+        }
+
+        .toast-icon {
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .toast.success .toast-icon {
+            color: #28a745;
+        }
+
+        .toast.error .toast-icon {
+            color: #dc3545;
+        }
+
+        .toast.info .toast-icon {
+            color: #17a2b8;
+        }
+
+        .toast.warning .toast-icon {
+            color: #ffc107;
+        }
+
+        .toast-content {
+            flex: 1;
+        }
+
+        .toast-title {
+            font-weight: bold;
+            margin-bottom: 4px;
+            font-size: 15px;
+            color: #333;
+        }
+
+        .toast-message {
+            font-size: 13px;
+            color: #666;
+        }
+
+        .toast-progress {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            animation: progress 3s linear forwards;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideOut {
+            from {
+                transform: translateX(0);
+                opacity: 1;
+            }
+            to {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+        }
+
+        @keyframes progress {
+            from {
+                width: 100%;
+            }
+            to {
+                width: 0%;
+            }
+        }
+
+        .toast.hiding {
+            animation: slideOut 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>⚙️ 系統設定</h1>
+            <div class="actions">
+                <span style="color: #666; margin-right: 10px;">👤 {{ username }}</span>
+                <a href="/admin_dashboard" class="btn btn-primary">🔙 返回後台</a>
+                <a href="/" class="btn btn-secondary">🏠 返回主頁</a>
+            </div>
+        </div>
+
+        <div id="message" class="message"></div>
+
+        <!-- Warning Box -->
+        <div class="warning-box">
+            <h4>⚠️ 重要提示</h4>
+            <ul>
+                <li>修改設定後務必先在最底下<strong>按下儲存設定</strong>然後<strong>重新啟動系統</strong>才能完全生效！</li>
+                <li>請謹慎修改識別參數，不當的設定可能影響辨識準確度</li>
+                <li>修改管理員密碼後，請妥善保管新密碼</li>
+            </ul>
+        </div>
+
+        <!-- System Settings -->
+        <div class="card">
+            <h2>🏢 系統資訊</h2>
+            
+            <div class="form-section">
+                <div class="form-group">
+                    <label for="systemName">系統名稱</label>
+                    <input type="text" id="systemName" value="{{ config.system.system_name }}">
+                    <div class="help-text">顯示在系統標題列的名稱</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="version">系統版本</label>
+                    <input type="text" id="version" value="{{ config.system.version }}" readonly style="background: #f5f5f5;">
+                    <div class="help-text">當前系統版本（唯讀）</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="language">系統語言</label>
+                    <select id="language">
+                        <option value="zh-TW" {% if config.system.language == 'zh-TW' %}selected{% endif %}>繁體中文</option>
+                        <option value="zh-CN" {% if config.system.language == 'zh-CN' %}selected{% endif %}>简体中文</option>
+                        <option value="en" {% if config.system.language == 'en' %}selected{% endif %}>English</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recognition Settings -->
+        <div class="card">
+            <h2>🎯 人臉辨識設定</h2>
+            
+            <div class="form-section">
+                <h3>📏 辨識參數</h3>
+
+                <div class="form-group">
+                    <label for="tolerance">
+                        Tolerance（容忍度）
+                        <span class="range-value" id="toleranceValue">{{ config.recognition.tolerance }}</span>
+                    </label>
+                    <input type="range" id="tolerance" min="0.3" max="0.6" step="0.01" value="{{ config.recognition.tolerance }}" oninput="updateRangeValue('tolerance', this.value)">
+                    <div class="help-text">
+                        數值越小越嚴格（建議: 0.40-0.50）<br>
+                        • 0.30-0.40: 非常嚴格，減少誤識別但可能漏識別<br>
+                        • 0.40-0.50: 適中，平衡準確度和辨識率 ⭐<br>
+                        • 0.50-0.60: 寬鬆，提高辨識率但可能誤識別
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="displayThreshold">
+                        顯示信心度閾值（%）
+                        <span class="range-value" id="displayThresholdValue">{{ config.recognition.display_confidence_threshold }}</span>
+                    </label>
+                    <input type="range" id="displayThreshold" min="50" max="90" step="1" value="{{ config.recognition.display_confidence_threshold }}" oninput="updateRangeValue('displayThreshold', this.value)">
+                    <div class="help-text">達到此信心度才會在畫面上顯示姓名（建議: 60-70%）</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="attendanceThreshold">
+                        出席記錄閾值（%）
+                        <span class="range-value" id="attendanceThresholdValue">{{ config.recognition.attendance_confidence_threshold }}</span>
+                    </label>
+                    <input type="range" id="attendanceThreshold" min="50" max="90" step="1" value="{{ config.recognition.attendance_confidence_threshold }}" oninput="updateRangeValue('attendanceThreshold', this.value)">
+                    <div class="help-text">達到此信心度才會記錄出席（建議: 65-75%）</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="processFrames">
+                        處理幀數間隔
+                        <span class="range-value" id="processFramesValue">{{ config.recognition.process_every_n_frames }}</span>
+                    </label>
+                    <input type="range" id="processFrames" min="10" max="120" step="10" value="{{ config.recognition.process_every_n_frames }}" oninput="updateRangeValue('processFrames', this.value)">
+                    <div class="help-text">
+                        每 N 幀處理一次人臉辨識（影響效能和反應速度）<br>
+                        • 10-30: 反應快但耗資源<br>
+                        • 40-60: 平衡效能和反應 ⭐<br>
+                        • 70-120: 省資源但反應慢
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Video Settings -->
+        <div class="card">
+            <h2>📹 影像設定</h2>
+            
+            <div class="form-section">
+                <div class="form-group">
+                    <label for="jpegQuality">
+                        JPEG 影像品質（%）
+                        <span class="range-value" id="jpegQualityValue">{{ config.video.jpeg_quality }}</span>
+                    </label>
+                    <input type="range" id="jpegQuality" min="60" max="100" step="5" value="{{ config.video.jpeg_quality }}" oninput="updateRangeValue('jpegQuality', this.value)">
+                    <div class="help-text">
+                        影像串流的 JPEG 壓縮品質（建議: 80-90%）<br>
+                        較低的品質可提升傳輸速度，但影像較模糊
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="cameraIndex">鏡頭索引</label>
+                    <input type="number" id="cameraIndex" min="0" max="9" value="{{ config.video.camera_index }}">
+                    <div class="help-text">
+                        鏡頭設備編號（0=預設鏡頭，1=第二個鏡頭...）<br>
+                        如果辨識畫面無法顯示，可嘗試修改此數值
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Admin Settings -->
+        <div class="card">
+            <h2>🔐 管理員設定</h2>
+            
+            <div class="warning-box">
+                <h4>🔒 安全提示</h4>
+                <ul>
+                    <li>修改帳號密碼後，下次登入需使用新的帳號密碼</li>
+                    <li>請使用強密碼（至少8位，包含英文和數字）</li>
+                    <li>請勿與他人分享管理員密碼</li>
+                </ul>
+            </div>
+
+            <div class="form-section">
+                <div class="form-group">
+                    <label for="adminUsername">管理員帳號</label>
+                    <input type="text" id="adminUsername" value="{{ config.admin.username }}">
+                    <div class="help-text">用於登入後台管理系統的帳號</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="adminPassword">管理員密碼</label>
+                    <input type="password" id="adminPassword" value="{{ config.admin.password }}">
+                    <div class="help-text">用於登入後台管理系統的密碼</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="sessionTimeout">
+                        Session 逾時時間（秒）
+                        <span class="range-value" id="sessionTimeoutValue">{{ config.admin.session_timeout }}</span>
+                    </label>
+                    <input type="range" id="sessionTimeout" min="300" max="86400" step="300" value="{{ config.admin.session_timeout }}" oninput="updateRangeValue('sessionTimeout', this.value)">
+                    <div class="help-text">
+                        登入後的有效時間（建議: 3600秒 = 1小時）<br>
+                        超過此時間未操作將自動登出
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Attendance Settings -->
+        <div class="card">
+            <h2>📝 出席記錄設定</h2>
+            
+            <div class="form-section">
+                <div class="form-group">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="autoRecord" {% if config.attendance.auto_record %}checked{% endif %}>
+                        <label for="autoRecord" style="margin-bottom: 0;">自動記錄出席</label>
+                    </div>
+                    <div class="help-text">啟用後，辨識到學生時自動記錄出席</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="recordFormat">記錄格式</label>
+                    <select id="recordFormat">
+                        <option value="csv" {% if config.attendance.record_format == 'csv' %}selected{% endif %}>CSV</option>
+                        <option value="excel" {% if config.attendance.record_format == 'excel' %}selected{% endif %}>Excel</option>
+                        <option value="json" {% if config.attendance.record_format == 'json' %}selected{% endif %}>JSON</option>
+                    </select>
+                    <div class="help-text">出席記錄儲存的檔案格式（目前僅支援 CSV）</div>
+                </div>
+
+                <div class="form-group">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="backupEnabled" {% if config.attendance.backup_enabled %}checked{% endif %}>
+                        <label for="backupEnabled" style="margin-bottom: 0;">啟用自動備份</label>
+                    </div>
+                    <div class="help-text">定期備份出席記錄（功能開發中）</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+            <div class="info-note" style="background: rgba(255,255,255,0.15); border-left: 4px solid white; color: white; margin-top: 15px;">
+                <strong>目前課程資訊：</strong>
+                <br>
+                📚 {{ config.course.course_name if config.course else '計算機概論' }} 
+                - 第 {{ config.course.current_session if config.course else 1 }} 節（共 {{ config.course.total_sessions if config.course else 3 }} 節）
+                <br>
+                👨‍🏫 {{ config.course.instructor if config.course else '林義凱教授' }}
+            </div>
+        </div>
+
+        <!-- Current Configuration Info -->
+        <div class="info-box">
+            <h4>📊 當前配置摘要</h4>
+            <p><strong>辨識容忍度:</strong> {{ config.recognition.tolerance }}</p>
+            <p><strong>顯示閾值:</strong> {{ config.recognition.display_confidence_threshold }}%</p>
+            <p><strong>出席閾值:</strong> {{ config.recognition.attendance_confidence_threshold }}%</p>
+            <p><strong>處理間隔:</strong> 每 {{ config.recognition.process_every_n_frames }} 幀</p>
+            <p><strong>影像品質:</strong> {{ config.video.jpeg_quality }}%</p>
+            <p><strong>目前課程:</strong> {{ config.course.course_name if config.course else '計算機概論' }} - 第 {{ config.course.current_session if config.course else 1 }} 節</p>
+        </div>
+
+        <!-- Action Buttons -->
+        <div class="card">
+            <div class="button-group">
+                <button class="btn btn-success" onclick="saveSettings()">
+                    💾 儲存設定
+                </button>
+                <button class="btn btn-warning" onclick="resetSettings()">
+                    🔄 重置為預設值
+                </button>
+                <button class="btn btn-secondary" onclick="window.location.href='/admin_dashboard'">
+                    ❌ 取消
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 通用 Toast 通知函數
+        function showToast(title, message, type = 'success', duration = 3000) {
+            const container = document.getElementById('toastContainer');
+            
+            // 創建 toast 元素
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            
+            // 設定圖標
+            const icons = {
+                success: '✓',
+                error: '✗',
+                info: 'ℹ',
+                warning: '⚠'
+            };
+            
+            toast.innerHTML = `
+                <div class="toast-icon">${icons[type] || '✓'}</div>
+                <div class="toast-content">
+                    <div class="toast-title">${title}</div>
+                    ${message ? `<div class="toast-message">${message}</div>` : ''}
+                </div>
+                <div class="toast-progress"></div>
+            `;
+            
+            // 添加到容器
+            container.appendChild(toast);
+            
+            // 自動移除
+            setTimeout(() => {
+                toast.classList.add('hiding');
+                setTimeout(() => {
+                    container.removeChild(toast);
+                }, 400);
+            }, duration);
+        }
+
+        function showMessage(text, type) {
+            // 解析訊息中的 emoji 和文字
+            const titleMap = {
+                'success': '操作成功',
+                'error': '操作失敗',
+                'info': '提示訊息',
+                'warning': '警告訊息'
+            };
+            
+            // 移除訊息前面的 emoji（✅ 或 ❌）
+            const cleanText = text.replace(/^[✅❌]\s*/, '');
+            
+            showToast(titleMap[type] || '通知', cleanText, type);
+        }
+
+        function updateRangeValue(id, value) {
+            document.getElementById(id + 'Value').textContent = value;
+        }
+
+        async function saveSettings() {
+            try {
+                const settings = {
+                    system: {
+                        system_name: document.getElementById('systemName').value,
+                        language: document.getElementById('language').value
+                    },
+                    recognition: {
+                        tolerance: parseFloat(document.getElementById('tolerance').value),
+                        display_confidence_threshold: parseInt(document.getElementById('displayThreshold').value),
+                        attendance_confidence_threshold: parseInt(document.getElementById('attendanceThreshold').value),
+                        process_every_n_frames: parseInt(document.getElementById('processFrames').value)
+                    },
+                    video: {
+                        jpeg_quality: parseInt(document.getElementById('jpegQuality').value),
+                        camera_index: parseInt(document.getElementById('cameraIndex').value)
+                    },
+                    admin: {
+                        username: document.getElementById('adminUsername').value,
+                        password: document.getElementById('adminPassword').value,
+                        session_timeout: parseInt(document.getElementById('sessionTimeout').value)
+                    },
+                    attendance: {
+                        auto_record: document.getElementById('autoRecord').checked,
+                        record_format: document.getElementById('recordFormat').value,
+                        backup_enabled: document.getElementById('backupEnabled').checked
+                    }
+                };
+
+                const response = await fetch('/admin_settings/save', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(settings)
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showMessage('✅ ' + result.message, 'success');
+                    
+                    // 3秒後重新載入頁面
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 3000);
+                } else {
+                    showMessage('❌ ' + result.message, 'error');
+                }
+
+            } catch (error) {
+                console.error('Save settings error:', error);
+                showMessage('儲存失敗: ' + error.message, 'error');
+            }
+        }
+
+        async function resetSettings() {
+            if (!confirm('確定要重置為預設設定嗎？\n\n這將會還原所有設定到初始值。')) {
+                return;
+            }
+
+            try {
+                const response = await fetch('/admin_settings/reset', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showMessage('✅ ' + result.message, 'success');
+                    
+                    // 2秒後重新載入頁面
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 2000);
+                } else {
+                    showMessage('❌ ' + result.message, 'error');
+                }
+
+            } catch (error) {
+                console.error('Reset settings error:', error);
+                showMessage('重置失敗: ' + error.message, 'error');
+            }
+        }
+    </script>
+
+    <!-- Toast 通知容器 -->
+    <div class="toast-container" id="toastContainer"></div>
+</body>
+</html>
