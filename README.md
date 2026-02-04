@@ -1,4 +1,4 @@
-# NPTUDAS - 國立屏東大學 AI 人臉辨識點名系統
+# NPTUDAS - 國立屏東大學 AI 智慧即時點名系統
 
 NPTUDAS (NPTU Deep Attendance System) 是一款基於 Python Flask 與 Deep Learning 的即時人臉辨識點名系統。
 
