@@ -41,6 +41,14 @@ NPTUDAS (NPTU Deep Attendance System) 是一款基於 Python Flask 與 Deep Lear
 - 資料處理: Pandas, NumPy
 - 前端介面: HTML5, CSS3, JavaScript（RWD 設計）
 
+## 網頁截圖
+
+<img width="1918" height="1027" alt="main page" src="https://github.com/user-attachments/assets/b78d06ae-9660-45ef-bb1e-413d79785112" />
+
+<img width="1918" height="1027" alt="dashboard page" src="https://github.com/user-attachments/assets/ff68b114-2bfc-42ac-bc9c-bcd84ea96ec9" />
+
+<img width="1915" height="1027" alt="registry page" src="https://github.com/user-attachments/assets/85c133f4-c1c2-483f-8e30-c9f128317d74" />
+
 ## 安裝執行
 
 ### 環境需求
