@@ -59,3 +59,10 @@ python -m venv venv
 venv\Scripts\activate
 
 pip install flask opencv-python face_recognition pandas numpy openpyxl
+```
+
+### 2. 執行
+
+```bash
+python app.py
+```
