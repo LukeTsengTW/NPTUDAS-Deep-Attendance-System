@@ -4,6 +4,8 @@ NPTUDAS (NPTU Deep Attendance System) 是一款基於 Python Flask 與 Deep Lear
 
 主要針對課堂環境而設計，能夠透過鏡頭做到即時偵測並辨識學生，自動完成點名記錄。
 
+（2025/12/15）本作品於【114-1學期屏大AI創作應用競賽暨成果展】中斬獲【**第一名**】佳績，得獎名單網址：https://ugsi2usr.nptu.edu.tw/p/406-1043-190073,r11.php
+
 ## 主要功能
 
 ### 1. 即時人臉辨識
